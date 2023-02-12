@@ -3,18 +3,16 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import React from "react";
-import {ImagePopup} from './ImagePopup'
+import { ImagePopup } from "./ImagePopup";
 
 function App() {
-
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
 
-
-  function handleCardClick(selectedCard){
+  function handleCardClick(selectedCard) {
     setSelectedCard(selectedCard);
   }
 
@@ -51,20 +49,20 @@ function App() {
           onEditProfile={() => {
             handleEditProfileClick(true);
           }}
-          onCardClick={(selectedCard) => {handleCardClick(selectedCard)}}
+          onCardClick={(selectedCard) => {
+            handleCardClick(selectedCard);
+          }}
         />
         <Footer />
 
-        <ImagePopup 
-        card={selectedCard}
-        onClose={closeAllPopups}
-        />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
         <PopupWithForm
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           title="Редактировать профиль"
           name="profile"
+          buttonText="Сохранить"
           children={
             <>
               <input
@@ -97,6 +95,7 @@ function App() {
           onClose={closeAllPopups}
           title="Новое место"
           name="place"
+          buttonText="Сохранить"
           children={
             <>
               <input
@@ -124,19 +123,14 @@ function App() {
           onClose={closeAllPopups}
           title="Вы уверены?"
           name="deleteProfile"
-          children={
-            <>
-              <button type="submit" className="popup__button">
-                Да
-              </button>
-            </>
-          }
+          buttonText="Да"
         />
         <PopupWithForm
           onClose={closeAllPopups}
           isOpen={isEditAvatarPopupOpen}
           title="Обновить аватар"
           name="avatar"
+          buttonText="Сохранить"
           children={
             <>
               <input
@@ -150,8 +144,6 @@ function App() {
             </>
           }
         />
-
-
       </>
     </div>
   );
