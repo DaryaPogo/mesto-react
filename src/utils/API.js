@@ -1,4 +1,4 @@
-import {apiConfig} from "../utils/utils"
+import { apiConfig } from "../utils/utils";
 
 export class API {
   constructor(config) {
@@ -27,24 +27,24 @@ export class API {
     }).then(this._getResponse);
   }
 
-  editProfile(item) {
+  editProfile(data) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
-        name: item.name,
-        about: item.job,
+        name: data.name,
+        about: data.about,
       }),
     }).then(this._getResponse);
   }
 
-  addNewCard(inputList) {
+  addNewCard({ place, link }) {
     return fetch(`${this.baseUrl}/cards`, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
-        name: inputList.place,
-        link: inputList.link,
+        name: place,
+        link: link,
       }),
     }).then(this._getResponse);
   }
@@ -56,30 +56,30 @@ export class API {
     }).then(this._getResponse);
   }
 
-  cardLike(cardId) {
-    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
-      method: "PUT",
-      headers: this.headers,
-    }).then(this._getResponse);
+  changeLikeCardStatus(cardId, isLiked) {
+    if (isLiked) {
+      return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
+        method: "PUT",
+        headers: this.headers,
+      }).then(this._getResponse);
+    } else {
+      return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
+        method: "DELETE",
+        headers: this.headers,
+      }).then(this._getResponse);
+    }
   }
 
-  cardDeleteLike(cardId) {
-    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
-      method: "DELETE",
-      headers: this.headers,
-    }).then(this._getResponse);
-  }
-
-  changeAvatar(user) {
+  changeAvatar({ avatar }) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
-        avatar: user.avatar,
+        avatar: avatar,
       }),
     }).then(this._getResponse);
   }
 }
 
 const api = new API(apiConfig);
-export default api
+export default api;
