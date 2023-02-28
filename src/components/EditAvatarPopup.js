@@ -1,10 +1,7 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { getValue } from "@testing-library/user-event/dist/utils";
 
 function EditAvatarPopup(props) {
-  const currentUser = React.useContext(CurrentUserContext);
   const [avatar, setAvatar] = React.useState("");
   const imageRef = React.useRef();
 
@@ -16,8 +13,8 @@ function EditAvatarPopup(props) {
   }
 
   React.useEffect(() => {
-    setAvatar(currentUser.src);
-  }, [currentUser]);
+    setAvatar("");
+  }, []);
 
   return (
     <PopupWithForm
